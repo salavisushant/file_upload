@@ -1,14 +1,20 @@
 const express = require('express');
+const { Mongoose } = require('mongoose');
 
 const router = express.Router();
 
+const upload = require("../middleware/upload");
 
 const Gallary = require('../models/gallary.model')
 
-router.post('/',async (req, res) => {
+router.post('/',upload.any("pictures"), async (req, res) => {
+    const filePath = req.files.map(file => file.path)
     try {
-        const gallary = await Gallary.create(req.body);     
-        return res.status(201).json({gallary})
+        const user = await Gallary.create({
+            pictures: filePath,
+            user_id:req.body.user_id,
+        });     
+        return res.status(201).json({user})
     } catch (e) {
         return res.status(500).json({status:Failed,message:e.message});
     }

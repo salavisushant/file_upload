@@ -1,7 +1,7 @@
-const {Schema,model} = require("mongoose");
+const mongoose = require("mongoose");
 
-const gallarySchema = new Schema({
-    pictures: [{type: "string", required: true}],
+const gallarySchema = new mongoose.Schema({
+    pictures: [{type:String, required: true},],
     user_id : {type:mongoose.Schema.Types.ObjectId,
         ref:"user",
         required:true},
@@ -11,4 +11,4 @@ const gallarySchema = new Schema({
 });
 
 
-module.exports = model("gallary",gallarySchema);
+module.exports = mongoose.model("gallary",gallarySchema);
